@@ -1,0 +1,98 @@
+// cImpre.hpp
+// ----------
+//
+// Definici¢n de la clase cImpre para manejo de impresoras serie.
+//
+#include "cComm.hpp"
+
+class cImpre : public cComm
+{
+public:
+       // Constructor/destructor
+       cImpre();
+       ~cImpre();
+private:
+        //-------------->Implementaci¢n
+        UINT   m_bEuros;
+        UINT   m_bBoletaAbierta;
+        UINT   m_bPrimeraVez;
+        UINT   m_bAbono; // Indica si la factura es negativa
+        UINT   m_bTraspaso; // Indica que se trata de un traspaso
+        UINT   m_nLineas;
+        UINT   m_nIndComando;
+        UINT   m_nIndPais;
+        int    m_nError;
+        int    m_nEstado;
+        char  m_cClaseError;
+        char  m_cSigno;
+        char  m_szPais[4];
+        char  m_szParametros[MAX_LONG_BUFFER];
+        char  m_szComando[MAX_LONG_BUFFER];
+        char  m_szTotal[17];
+        UCHAR m_arCadenaSalida[MAX_LONG_BUFFER];
+        // ------------->Comportamiento
+        int   DesglosaComando( char* szComando );
+        void  ComponeComando( char szComando[7] );
+        // Comandos de la impresora
+        // TURQUIA
+        void  TURQUIA_Procesa();
+        void  TURQUIA_Testeo();
+        void  TURQUIA_Reset();
+        void  TURQUIA_PaperStatus();
+        void  TURQUIA_LetraPeque();
+        void  TURQUIA_AreaTrabajo();
+        void  TURQUIA_DeshabilitaBotones();
+        void  TURQUIA_Cabecb();
+        void  TURQUIA_Lindeb();
+        void  TURQUIA_Piefis();
+        void  TURQUIA_Totalb();
+        void  TURQUIA_Fechab();
+        void  TURQUIA_Texlib();
+        void  TURQUIA_Lintrasp();
+        void  TURQUIA_Expulsar();
+        void  TURQUIA_Implet();
+        void  TURQUIA_Infonf();
+        void  TURQUIA_Libera();
+        // HUNGRIA
+        void  HUNGRIA_Ejecuta();
+        void  HUNGRIA_Procesa();
+        void  HUNGRIA_Numbol();
+        void  HUNGRIA_Lindeb();
+        void  HUNGRIA_Piefis();
+        void  HUNGRIA_Pagofi();
+        void  HUNGRIA_Cierrz();
+        // POLONIA
+        void  POLONIA_Procesa();
+        void  POLONIA_MFCaError();
+        void  POLONIA_QueryE();
+        void  POLONIA_Cierra_report();
+        void  POLONIA_Testeo();
+        void  POLONIA_Numcaj();
+        void  POLONIA_Numtiq();
+        void  POLONIA_Fechaf();
+        void  POLONIA_Horafi();
+        void  POLONIA_Totalb();
+        void  POLONIA_Cabecb();
+        void  POLONIA_Lindeb();
+        void  POLONIA_Pagofi();
+        void  POLONIA_Cierrz();
+        void  POLONIA_Infonf();
+        //void  POLONIA_Testea();
+        void  POLONIA_Testhw();
+        void  POLONIA_Abreca();
+        void  POLONIA_Numero();
+        void  POLONIA_Disply();
+        void  POLONIA_Cancel();
+        // PORTUGAL
+        void  PORTUGAL_Procesa();
+        void  PORTUGAL_Infonf();
+public:
+       // Implementaci¢n
+       char m_szRespuesta[MAX_LONG_BUFFER];
+       // Comportamiento
+       void  HabilitaInterrupciones();
+       int   GetBoletaAbierta();
+       void  ComponeError();
+       void  InterpretaComando( char szComando[MAX_LONG_BUFFER] );
+       int   GetError();
+};

@@ -1,0 +1,58 @@
+// cComm.hpp
+// ---------
+//
+// Definici¢n de la clase COMM para las comunicaciones en serie
+//
+class cComm
+{
+public:
+       // Constructor/destructor
+       cComm ();
+       cComm (char cTipo,       // 'T'iempo, 'C'adena
+              UCHAR cFin,        // Car cter fin de secuencia
+              ULONG iTimeout,   // Timeout
+              int iBaudios,     // velocidad en bits por segundo
+              int iParidad,     // c¢digo de paridad
+              int iPalabra,     // longitud de palabra
+              int iBitsParada); // bits de parada para fin de car cter
+       ~cComm ();
+
+private:
+       // Implementaci¢n
+       int   m_bPICInicializado;
+       int   m_bIntCapturada;
+       char  m_cTipo;
+       UCHAR m_cFin;
+       UCHAR m_cParms;
+       unsigned long m_iTimeout;
+#ifdef __TURBOC__       
+       void interrupt (far * m_pOld_Serial_Handler)(__CPPARGS);
+       void interrupt (far * m_pOld_CtrlC_Handler)(__CPPARGS);
+#else
+       typedef void (interrupt far * ptrINTERRUPT)(__CPPARGS);
+       ptrINTERRUPT m_pOld_Serial_Handler;
+       ptrINTERRUPT m_pOld_CtrlC_Handler;
+#endif       
+       // Operaciones
+       static void interrupt far cComm::SerialHandler(__CPPARGS);
+       static void interrupt far cComm::CtrlCHandler(__CPPARGS);
+       void  ObtieneRespuesta( void );
+       //int   GetDsr( void );
+protected:
+       // Implementacion esta y descendientes
+       UCHAR m_arRespuesta[MAX_LONG_BUFFER];
+       int   m_nNumCarRespuesta;
+       int   m_nError;
+       void  CapturaInterrupcion( void );
+       void  LiberaInterrupcion( void );
+       void  HabilitaPIC( void );
+       void  DeshabilitaPIC( void );
+       void  EnviaCadena( UCHAR arCadena[MAX_LONG_BUFFER],
+                          int nElementos,
+                          char cTipo,
+                          UINT nNumCar,
+                          UCHAR cFin,
+                          UINT bEspera,
+                          UINT nDelay);
+       int   GetNumError();   // Devuelve el n£m. del £ltimo error
+};

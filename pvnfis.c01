@@ -1,0 +1,47 @@
+// pvnfis.cpp (m¢dulo principal)
+// ----------
+//
+//    Programa interface universal impresoras fiscales.
+//
+// Miquel de la Ossa   --- MANGO --- Octubre 2.000
+//
+// Compilable con Microsoft Visual C++ 1.52 y Borland C++ 3.0
+
+#include "Constant.hpp"
+#include "cImpre.hpp"
+#include "cFile.hpp"
+
+#include <stdlib.h>
+#include <stdio.h>
+#ifdef DEBUG
+   #include <conio.h>
+#endif
+
+void main()
+{
+    cImpre* Impresora = new cImpre();
+    cFile*  Fichfis   = new cFile(FICHFIS, "rb");
+
+    // N£cleo principal.
+    // Mientras no exista error en la lectura y los comandos
+    // se ejecuten correctamente, continuar...
+    while ( (!Fichfis->GetError()) && (Fichfis->LeerSigLinea() != EOF) )
+    {
+        Impresora->InterpretaComando( Fichfis->GetLinea() );
+        if ( Impresora->GetError() )
+           break;
+    }
+    delete Fichfis;
+
+    // Grabaci¢n de Fichint ---> Respuesta
+    cFile* Fichint = new cFile(FICHINT, "wb");
+    Fichint->EscribirLinea( Impresora->m_szRespuesta );
+    delete Fichint;
+
+    remove( FICHFIS_OLD );
+    rename( FICHFIS, FICHFIS_OLD ); // Comandos de entrada ---> FICHFIS.OLD
+    rename( FICHINT, FICHFIS );  // Respuesta = FICHFIS
+
+    delete Impresora; // Siempre debe cerrarse, para restaurar interrupciones
+                              
+}

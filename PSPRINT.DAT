@@ -1,0 +1,11 @@
+Searching *.* files for string (IRQ_COM1)
+--- Directory = C:\MNG\C\PVNFIS\
+C:\MNG\C\PVNFIS\CONSTANT.HPP     3513   11:00a
+C:\MNG\C\PVNFIS\PVNFIS.BSC      50972    9:08a
+DOS Error 5 (Permission denied) accessing C:\MNG\C\PVNFIS\PSPRINT.DAT
+--- Directory = C:\MNG\C\PVNFIS\BORLAND
+C:\MNG\C\PVNFIS\BORLAND\CONSTANT.HPP    3181    6:42a
+--- Directory = C:\MNG\C\PVNFIS\HGR_ANT
+C:\MNG\C\PVNFIS\HGR_ANT\CONSTANT.HPP    3096   10:10a
+-----------------------------------------------------------------------------
+Found 0 word matches in 4 of 117 files and 3 directories processed
